@@ -2,6 +2,8 @@ package com.IdentityServer.identityserver.config;
 
 
 import com.IdentityServer.identityserver.security.JwtHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,4 +22,9 @@ public class AuthController {
 
     @Autowired
     private JwtHelper helper;
+
+    private Logger logger= LoggerFactory.getLogger(AuthController.class);
+
+
+
 }
