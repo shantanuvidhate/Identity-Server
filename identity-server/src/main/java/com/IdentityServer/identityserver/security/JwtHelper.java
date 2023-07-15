@@ -16,7 +16,7 @@ public class JwtHelper {
 
     // Token validity duration (in seconds)
 //    JWT_TOKEN_VALIDITY represents the duration of token validity in seconds. In this example, it's set to 5 hours.
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; // 5 hours
+    public static final long JWT_TOKEN_VALIDITY = 60; // 1 min
 
     // Secret key used for signing the tokens
 //    The secret variable holds the secret key used for signing and validating JWT tokens. It should be kept secure and private.
