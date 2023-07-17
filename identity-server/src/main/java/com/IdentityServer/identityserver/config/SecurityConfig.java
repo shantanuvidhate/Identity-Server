@@ -31,7 +31,7 @@ public class SecurityConfig {
         httpSecurity.csrf(csrf -> csrf.disable())       // used Customizer Lambda in Spring Security 6.x
                 .cors(cors -> cors.disable())           // used Customizer Lambda in Spring Security 6.x
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/home/**").authenticated()
-                        .requestMatchers("/auth/login").permitAll().anyRequest().authenticated())
+                        .requestMatchers("/auth/login").permitAll().requestMatchers("/auth/create-user").permitAll().anyRequest().authenticated())
                 .exceptionHandling(e -> e.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));  //used STATELESS session
 
