@@ -1,4 +1,4 @@
-package com.IdentityServer.identityserver.config;
+package com.IdentityServer.identityserver.controllers;
 
 
 import com.IdentityServer.identityserver.entities.User;
