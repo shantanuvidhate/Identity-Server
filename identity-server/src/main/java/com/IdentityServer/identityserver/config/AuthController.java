@@ -1,9 +1,11 @@
 package com.IdentityServer.identityserver.config;
 
 
+import com.IdentityServer.identityserver.entities.User;
 import com.IdentityServer.identityserver.models.JwtRequest;
 import com.IdentityServer.identityserver.models.JwtResponse;
 import com.IdentityServer.identityserver.security.JwtHelper;
+import com.IdentityServer.identityserver.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class AuthController {
     private JwtHelper helper;
 
     private final Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+    @Autowired
+    private UserService userService;
 
 
     @PostMapping("/login")
@@ -64,6 +69,12 @@ public class AuthController {
     @ExceptionHandler(BadCredentialsException.class)
     public String exceptionHandler() {
         return "Credentials Invalid !!";
+    }
+
+
+    @PostMapping("/create-user")
+    public User createUser (@RequestBody User user){
+        return userService.createUser(user);
     }
 
 }

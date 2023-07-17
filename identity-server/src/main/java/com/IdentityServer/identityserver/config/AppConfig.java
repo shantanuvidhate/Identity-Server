@@ -13,7 +13,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 public class AppConfig {
-    
+
 //    For password encryption using BCryptPasswordEncoder
     @Bean
     public PasswordEncoder passwordEncoder () {
