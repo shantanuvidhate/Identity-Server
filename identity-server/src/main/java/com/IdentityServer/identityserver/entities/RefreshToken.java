@@ -1,10 +1,12 @@
 package com.IdentityServer.identityserver.entities;
 
+import lombok.Builder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
+@Builder
 @Document(collection = "refresh_token")
 public class RefreshToken {
 
