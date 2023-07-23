@@ -1,6 +1,7 @@
 package com.IdentityServer.identityserver.services;
 
 import com.IdentityServer.identityserver.Repositories.RefreshTokenRepository;
+import com.IdentityServer.identityserver.Repositories.UserRepository;
 import com.IdentityServer.identityserver.entities.RefreshToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,10 @@ import java.util.UUID;
 @Service
 public class RefreshTokenService {
 
-    public long refreshTokenValidity = 5*60*60*1000;
+    public long refreshTokenValidity = 5*60*60*1000;  // 5hrs
 
-
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private RefreshTokenRepository refreshTokenRepository;
@@ -22,8 +24,8 @@ public class RefreshTokenService {
         RefreshToken refreshToken = RefreshToken.builder()
                 .refreshToken(UUID.randomUUID().toString())
                 .expiry(Instant.now().plusMillis(refreshTokenValidity))
-//                .user()
-                .build();  // 5hrs
+                .user(userRepository.findByUsername(userName).get())
+                .build();
         return refreshToken;
     }
 
