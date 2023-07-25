@@ -29,8 +29,12 @@ public class RefreshTokenService {
         return refreshToken;
     }
 
-   public boolean verifyRefreshToken (String refreshToken){
-        return false;
-   }
+    public RefreshToken verifyRefreshToken(String refreshToken) {
+        RefreshToken refreshTokenOb = refreshTokenRepository.findById(refreshToken).orElseThrow(() -> new RuntimeException("Token does not exist"));
+        if (refreshTokenOb.getExpiry().compareTo(Instant.now()) < 0){
+            throw new RuntimeException("Refresh token Expired!!");
+        }
+        return refreshTokenOb;
+    }
 
 }
