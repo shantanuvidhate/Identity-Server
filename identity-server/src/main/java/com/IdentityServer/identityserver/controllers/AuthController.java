@@ -1,10 +1,12 @@
 package com.IdentityServer.identityserver.controllers;
 
 
+import com.IdentityServer.identityserver.entities.RefreshToken;
 import com.IdentityServer.identityserver.entities.User;
 import com.IdentityServer.identityserver.models.JwtRequest;
 import com.IdentityServer.identityserver.models.JwtResponse;
 import com.IdentityServer.identityserver.security.JwtHelper;
+import com.IdentityServer.identityserver.services.RefreshTokenService;
 import com.IdentityServer.identityserver.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,9 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private RefreshTokenService refreshTokenService;
 
 
     @PostMapping("/login")
@@ -46,6 +51,8 @@ public class AuthController {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         String token = this.helper.generateToken(userDetails);
+
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUsername());
 
         JwtResponse response = JwtResponse.builder()
                 .jwtToken(token)
