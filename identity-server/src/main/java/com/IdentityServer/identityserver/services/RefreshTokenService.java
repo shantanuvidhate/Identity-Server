@@ -33,7 +33,8 @@ public class RefreshTokenService {
 
     public RefreshToken verifyRefreshToken(String refreshToken) {
         RefreshToken refreshTokenOb = refreshTokenRepository.findById(refreshToken).orElseThrow(() -> new RuntimeException("Token does not exist"));
-        if (refreshTokenOb.getExpiry().compareTo(Instant.now()) < 0){
+        if (refreshTokenOb.getExpiry().compareTo(Instant.now()) < 0) {
+            refreshTokenRepository.delete(refreshTokenOb);
             throw new RuntimeException("Refresh token Expired!!");
         }
         return refreshTokenOb;
