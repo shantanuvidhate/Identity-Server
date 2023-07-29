@@ -1,6 +1,7 @@
 package com.IdentityServer.identityserver.entities;
 
 import lombok.Builder;
+import lombok.Generated;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,6 +12,7 @@ import java.time.Instant;
 public class RefreshToken {
 
     @Id
+    private int tokenId;
     private String refreshToken;
 
     private Instant expiry;
