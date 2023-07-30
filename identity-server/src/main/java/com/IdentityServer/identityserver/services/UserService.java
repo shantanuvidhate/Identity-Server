@@ -1,6 +1,9 @@
 package com.IdentityServer.identityserver.services;
 
-import com.IdentityServer.identityserver.models.User;
+import com.IdentityServer.identityserver.Repositories.UserRepository;
+import com.IdentityServer.identityserver.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,19 +13,19 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private List<User> store = new ArrayList<>();
+    @Autowired
+    private UserRepository userRepository;
 
-//    Constructor
-    public UserService (){
-        store.add(new User(UUID.randomUUID().toString(),"Alice","Alice@gmail.com"));
-        store.add(new User(UUID.randomUUID().toString(),"Bob","Bob@gmail.com"));
-        store.add(new User(UUID.randomUUID().toString(),"Tom","Tom@gmail.com"));
-        store.add(new User(UUID.randomUUID().toString(),"Jerry","Jerry@gmail.com"));
-    }
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 //    Return the store List
     public List<User> getUsers (){
-        return this.store;
+        return this.userRepository.findAll();
     }
 
+    public User createUser (User user){
+        user.setUserId(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
 }

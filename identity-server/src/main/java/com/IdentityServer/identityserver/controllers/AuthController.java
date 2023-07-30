@@ -1,9 +1,13 @@
-package com.IdentityServer.identityserver.config;
+package com.IdentityServer.identityserver.controllers;
 
 
+import com.IdentityServer.identityserver.entities.RefreshToken;
+import com.IdentityServer.identityserver.entities.User;
 import com.IdentityServer.identityserver.models.JwtRequest;
 import com.IdentityServer.identityserver.models.JwtResponse;
 import com.IdentityServer.identityserver.security.JwtHelper;
+import com.IdentityServer.identityserver.services.RefreshTokenService;
+import com.IdentityServer.identityserver.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +36,12 @@ public class AuthController {
 
     private final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private RefreshTokenService refreshTokenService;
+
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
@@ -42,8 +52,11 @@ public class AuthController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         String token = this.helper.generateToken(userDetails);
 
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUsername());
+
         JwtResponse response = JwtResponse.builder()
                 .jwtToken(token)
+                .refreshToken(refreshToken.getRefreshToken())
                 .username(userDetails.getUsername()).build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -64,6 +77,12 @@ public class AuthController {
     @ExceptionHandler(BadCredentialsException.class)
     public String exceptionHandler() {
         return "Credentials Invalid !!";
+    }
+
+
+    @PostMapping("/create-user")
+    public User createUser (@RequestBody User user){
+        return userService.createUser(user);
     }
 
 }

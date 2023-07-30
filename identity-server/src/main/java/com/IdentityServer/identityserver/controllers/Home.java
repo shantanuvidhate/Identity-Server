@@ -1,6 +1,6 @@
 package com.IdentityServer.identityserver.controllers;
 
-import com.IdentityServer.identityserver.models.User;
+import com.IdentityServer.identityserver.entities.User;
 import com.IdentityServer.identityserver.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -8,6 +8,8 @@ public class JwtResponse {
 
     private String username;
 
+    private String refreshToken;
+
     public String getJwtToken() {
         return jwtToken;
     }
@@ -24,12 +26,21 @@ public class JwtResponse {
         this.username = username;
     }
 
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
     public JwtResponse() {
     }
 
-    public JwtResponse(String jwtToken, String username) {
+    public JwtResponse(String jwtToken, String username , String refreshToken) {
         this.jwtToken = jwtToken;
         this.username = username;
+        this.refreshToken = refreshToken;
     }
 
     @Override
@@ -37,6 +48,7 @@ public class JwtResponse {
         return "JwtResponse{" +
                 "jwtToken='" + jwtToken + '\'' +
                 ", username='" + username + '\'' +
+                ", refreshToken='" + refreshToken + '\'' +
                 '}';
     }
 }
